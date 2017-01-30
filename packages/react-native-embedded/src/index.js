@@ -52,4 +52,5 @@ export {
 } from './bridge'
 
 // APIs
-export * as Alert from './apis/Alert'
+import * as AlertAPI from './apis/Alert'
+export const Alert = AlertAPI

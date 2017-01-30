@@ -1,6 +1,6 @@
 // @flow
 
-import UUID from 'uuid-js'
+import uuid from 'uuid/v4'
 import warning from 'warning'
 
 const requests = Object.create(null)
@@ -19,7 +19,7 @@ const onResponse = ({data, id, ok}: {data: mixed, id: string, ok: bool}) => {
     if (ok) req.resolve(data)
     else req.reject(data)
   } else {
-    warning(false, 'No tracked request for response: ' + id)
+    warning(false, 'No existing request for response: ' + id)
   }
 }
 
@@ -57,7 +57,7 @@ export const postEvent = ({name, data}: {name: string, data: mixed}) => {
 }
 
 export const postRequest = ({name, data}: {name: string, data: mixed}) => {
-  const id = UUID.create().toString()
+  const id = uuid()
   const promise = new Promise((resolve, reject) => {
     requests[id] = {resolve, reject}
   })
@@ -76,7 +76,7 @@ export const setup = (handlers = {}) => {
   if (handlers.onRequest) {
     onRequest = handlers.onResponse
   }
-  if (handlers.onRequest) {
+  if (handlers.onMessage) {
     onMessage = handlers.onMessage
   }
   document.addEventListener('message', onMessage)

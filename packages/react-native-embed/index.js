@@ -2,7 +2,7 @@
 
 import React, { Component } from 'react'
 import { Alert, WebView } from 'react-native'
-import UUID from 'uuid-js'
+import uuid from 'uuid/v4'
 import warning from 'warning'
 
 const eventHandlers = {
@@ -91,7 +91,7 @@ export default class Embed extends Component {
       if (res.then) {
         res.then((result) => {
           this.postResponse({id, ok: true, data: result})
-        }).catch((err) => {
+        }, (err) => {
           this.postResponse({id, ok: false, data: err})
         })
       } else {
@@ -108,7 +108,7 @@ export default class Embed extends Component {
       if (ok) req.resolve(data)
       else req.reject(data)
     } else {
-      warning(false, 'No tracked request for response: ' + id)
+      warning(false, 'No existing request for response: ' + id)
     }
   }
 
@@ -117,7 +117,7 @@ export default class Embed extends Component {
   }
 
   postRequest = ({name, data}: {name: string, data: mixed}) => {
-    const id = UUID.create().toString()
+    const id = uuid()
     const promise = new Promise((resolve, reject) => {
       this.requests[id] = {resolve, reject}
     })

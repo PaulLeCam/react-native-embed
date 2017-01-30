@@ -1,0 +1,31 @@
+{
+  "name": "ReactNativeEmbedExample",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start-native": "node node_modules/react-native/local-cli/cli.js start",
+    "test": "jest"
+  },
+  "dependencies": {
+    "electron": "~1.4.15",
+    "react": "~15.4.2",
+    "react-dom": "^15.4.2",
+    "react-native": "0.40.0",
+    "react-native-electron": "^0.0.5",
+    "react-native-elements": "^0.9.3",
+    "react-native-embed": "../../packages/react-native-embed",
+    "react-native-vector-icons": "^4.0.0",
+    "react-native-web": "^0.0.69",
+    "react-navigation": "^1.0.0-beta.1"
+  },
+  "devDependencies": {
+    "babel-jest": "^18.0.0",
+    "babel-preset-react-native": "^1.9.1",
+    "flow-bin": "^0.36.0",
+    "jest": "^18.1.0",
+    "react-test-renderer": "~15.4.2"
+  },
+  "jest": {
+    "preset": "react-native"
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "name": "ReactNativeEmbeddedExample",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "webpack-dev-server"
+  },
+  "dependencies": {
+    "react": "^15.4.2",
+    "react-dom": "^15.4.2",
+    "react-native-elements": "^0.9.3",
+    "react-native-embedded": "../../packages/react-native-embedded",
+    "react-native-vector-icons": "^4.0.0",
+    "react-native-web": "^0.0.69"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.22.2",
+    "babel-loader": "^6.2.10",
+    "babel-preset-react-native": "1.9.1",
+    "file-loader": "^0.10.0",
+    "webpack": "^2.2.0",
+    "webpack-dev-server": "^2.2.0"
+  }
+}
