@@ -16,7 +16,7 @@ export default class App extends Component {
         <Embed
           ref={e => { this.embed = e }}
           onEvent={this.onEvent}
-          source={{uri: 'http://localhost:7000'}}
+          source={{uri: 'http://localhost:3001'}}
         />
       </View>
     )

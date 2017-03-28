@@ -8,17 +8,17 @@
   "dependencies": {
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
-    "react-native-elements": "^0.9.3",
+    "react-native-elements": "^0.10.2",
     "react-native-embedded": "../../packages/react-native-embedded",
     "react-native-vector-icons": "^4.0.0",
-    "react-native-web": "^0.0.69"
+    "react-native-web": "^0.0.80"
   },
   "devDependencies": {
-    "babel-cli": "^6.22.2",
-    "babel-loader": "^6.2.10",
+    "babel-cli": "^6.24.0",
+    "babel-loader": "^6.4.1",
     "babel-preset-react-native": "1.9.1",
-    "file-loader": "^0.10.0",
-    "webpack": "^2.2.0",
-    "webpack-dev-server": "^2.2.0"
+    "file-loader": "^0.10.1",
+    "webpack": "^2.3.2",
+    "webpack-dev-server": "^2.4.2"
   }
 }

@@ -3,7 +3,8 @@
 import uuid from 'uuid/v4'
 import warning from 'warning'
 
-const requests = Object.create(null)
+const eventListeners: Map<string, Map<string, Function>> = Map()
+const requests: Map<string, {resolve: Function, reject: Function}> = Map()
 
 let onEvent = () => {
   warning(false, 'onEvent() not implemented')
@@ -13,8 +14,29 @@ let onRequest = () => {
   warning(false, 'onRequest() not implemented')
 }
 
-const onResponse = ({data, id, ok}: {data: mixed, id: string, ok: bool}) => {
-  const req = requests[id]
+const onListenerEvent = ({name, data, id}: {data: mixed, id: string}) => {
+  const listeners = eventListeners.get(name)
+  if (listeners) {
+    const handlers = listeners.get(id)
+    if (handler) {
+      handler(data)
+    } else {
+      warning(false, 'No existing handler for listener: ' + id)
+    }
+  } else {
+    warning(false, 'No existing listener for: ' + name)
+  }
+}
+
+const onListenerRemoved = ({name, id}: {id: string}) => {
+  const listeners = eventListeners.get(name)
+  if (listeners) {
+    listeners.delete(id)
+  }
+}
+
+const onResponse = ({data, id, ok}: {data: mixed, id: string, ok: boolean}) => {
+  const req = requests.get(id)
   if (req) {
     if (ok) req.resolve(data)
     else req.reject(data)
@@ -30,6 +52,12 @@ let onMessage = (ev: Object) => {
       switch (msg.type) {
         case 'event':
           onEvent(msg)
+          break
+        case 'listener.event':
+          onListenerEvent(msg)
+          break
+        case 'listener.removed':
+          onListenerRemoved(msg)
           break
         case 'request':
           onRequest(msg)
@@ -48,6 +76,39 @@ let onMessage = (ev: Object) => {
   }
 }
 
+export const addListener = (name: string, handler: Function) => {
+  const id = uuid()
+  let handlers = eventListeners.get(name)
+  if (!handlers) {
+    handlers = Map()
+  }
+  handlers.set(id, handler)
+  eventListeners.set(name, handlers)
+  postMessage({name, id, type: 'listener.add'})
+}
+
+export const removeListener = (name: string, handler: Function) => {
+  const handlers = eventListeners.get(name)
+  if (handlers) {
+    let id
+    for (let [handlerId, handlerFunc] of handlers) {
+      if (handlerFunc === handler) {
+        id = handlerId
+        handlers.delete(id)
+        break
+      }
+    }
+    if (id) {
+      postMessage({name, id, type: 'listener.remove'})
+      eventListeners.set(name, handlers)
+    } else {
+      warning(false, 'No id found for listener handler', handler)
+    }
+  } else {
+    warning(false, 'No existing listener for: ' + name)
+  }
+}
+
 export const postMessage = (payload = {}) => {
   window.postMessage(JSON.stringify(payload))
 }
@@ -59,7 +120,7 @@ export const postEvent = ({name, data}: {name: string, data: mixed}) => {
 export const postRequest = ({name, data}: {name: string, data: mixed}) => {
   const id = uuid()
   const promise = new Promise((resolve, reject) => {
-    requests[id] = {resolve, reject}
+    requests.set(id, {resolve, reject})
   })
   postMessage({name, data, id, type: 'request'})
   return promise
@@ -74,7 +135,7 @@ export const setup = (handlers = {}) => {
     onEvent = handlers.onEvent
   }
   if (handlers.onRequest) {
-    onRequest = handlers.onResponse
+    onRequest = handlers.onRequest
   }
   if (handlers.onMessage) {
     onMessage = handlers.onMessage

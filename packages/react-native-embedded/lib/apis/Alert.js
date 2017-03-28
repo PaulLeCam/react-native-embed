@@ -3,7 +3,7 @@ Object.defineProperty(exports,"__esModule",{value:true});exports.alert=undefined
 var _bridge=require('../bridge');
 
 var alert=exports.alert=function alert(title,message,btns,type){
-if(btns){(function(){
+if(btns){
 var callbacks={};
 var buttons=btns.map(function(btn,i){
 if(btn.onPress){
@@ -19,7 +19,7 @@ if(typeof index!=='undefined'){
 var onPress=callbacks[index];
 if(onPress)onPress();
 }
-});})();
+});
 }else{
 (0,_bridge.postEvent)({
 name:'Alert.alert',

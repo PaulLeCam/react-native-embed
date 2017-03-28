@@ -1,4 +1,4 @@
-// Export the full public API of react-native-web
+// Export the public API of react-native-web
 export {
   // top-level API
   findNodeHandle,
@@ -11,12 +11,10 @@ export {
   Animated,
   AppRegistry,
   AppState,
-  AsyncStorage,
   Dimensions,
   Easing,
   I18nManager,
   InteractionManager,
-  NetInfo,
   PanResponder,
   PixelRatio,
   Platform,
@@ -52,5 +50,11 @@ export {
 } from './bridge'
 
 // APIs
-import * as AlertAPI from './apis/Alert'
-export const Alert = AlertAPI
+export {
+  Alert,
+  AsyncStorage,
+  Clipboard,
+  Linking,
+  NetInfo,
+  Share,
+} from './apis'

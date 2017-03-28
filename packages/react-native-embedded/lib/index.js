@@ -1,4 +1,4 @@
-Object.defineProperty(exports,"__esModule",{value:true});exports.Alert=exports.setup=exports.postResponse=exports.postRequest=exports.postMessage=exports.postEvent=exports.NativeModules=exports.View=exports.TouchableWithoutFeedback=exports.TouchableOpacity=exports.TouchableHighlight=exports.TouchableBounce=exports.Touchable=exports.TextInput=exports.Text=exports.Switch=exports.ScrollView=exports.ProgressBar=exports.ListView=exports.Image=exports.ActivityIndicator=exports.Vibration=exports.UIManager=exports.StyleSheet=exports.Platform=exports.PixelRatio=exports.PanResponder=exports.NetInfo=exports.InteractionManager=exports.I18nManager=exports.Easing=exports.Dimensions=exports.AsyncStorage=exports.AppState=exports.AppRegistry=exports.Animated=exports.renderToString=exports.renderToStaticMarkup=exports.unmountComponentAtNode=exports.render=exports.findNodeHandle=undefined;var _reactNativeWeb=require('react-native-web');Object.defineProperty(exports,'findNodeHandle',{enumerable:true,get:function get(){return _reactNativeWeb.
+Object.defineProperty(exports,"__esModule",{value:true});var _reactNativeWeb=require('react-native-web');Object.defineProperty(exports,'findNodeHandle',{enumerable:true,get:function get(){return _reactNativeWeb.
 
 
 findNodeHandle;}});Object.defineProperty(exports,'render',{enumerable:true,get:function get(){return _reactNativeWeb.
@@ -10,13 +10,11 @@ renderToString;}});Object.defineProperty(exports,'Animated',{enumerable:true,get
 
 Animated;}});Object.defineProperty(exports,'AppRegistry',{enumerable:true,get:function get(){return _reactNativeWeb.
 AppRegistry;}});Object.defineProperty(exports,'AppState',{enumerable:true,get:function get(){return _reactNativeWeb.
-AppState;}});Object.defineProperty(exports,'AsyncStorage',{enumerable:true,get:function get(){return _reactNativeWeb.
-AsyncStorage;}});Object.defineProperty(exports,'Dimensions',{enumerable:true,get:function get(){return _reactNativeWeb.
+AppState;}});Object.defineProperty(exports,'Dimensions',{enumerable:true,get:function get(){return _reactNativeWeb.
 Dimensions;}});Object.defineProperty(exports,'Easing',{enumerable:true,get:function get(){return _reactNativeWeb.
 Easing;}});Object.defineProperty(exports,'I18nManager',{enumerable:true,get:function get(){return _reactNativeWeb.
 I18nManager;}});Object.defineProperty(exports,'InteractionManager',{enumerable:true,get:function get(){return _reactNativeWeb.
-InteractionManager;}});Object.defineProperty(exports,'NetInfo',{enumerable:true,get:function get(){return _reactNativeWeb.
-NetInfo;}});Object.defineProperty(exports,'PanResponder',{enumerable:true,get:function get(){return _reactNativeWeb.
+InteractionManager;}});Object.defineProperty(exports,'PanResponder',{enumerable:true,get:function get(){return _reactNativeWeb.
 PanResponder;}});Object.defineProperty(exports,'PixelRatio',{enumerable:true,get:function get(){return _reactNativeWeb.
 PixelRatio;}});Object.defineProperty(exports,'Platform',{enumerable:true,get:function get(){return _reactNativeWeb.
 Platform;}});Object.defineProperty(exports,'StyleSheet',{enumerable:true,get:function get(){return _reactNativeWeb.
@@ -48,9 +46,14 @@ postEvent;}});Object.defineProperty(exports,'postMessage',{enumerable:true,get:f
 postMessage;}});Object.defineProperty(exports,'postRequest',{enumerable:true,get:function get(){return _bridge.
 postRequest;}});Object.defineProperty(exports,'postResponse',{enumerable:true,get:function get(){return _bridge.
 postResponse;}});Object.defineProperty(exports,'setup',{enumerable:true,get:function get(){return _bridge.
-setup;}});
+setup;}});var _apis=require('./apis');Object.defineProperty(exports,'Alert',{enumerable:true,get:function get(){return _apis.
 
 
 
-var _Alert=require('./apis/Alert');var AlertAPI=_interopRequireWildcard(_Alert);function _interopRequireWildcard(obj){if(obj&&obj.__esModule){return obj;}else{var newObj={};if(obj!=null){for(var key in obj){if(Object.prototype.hasOwnProperty.call(obj,key))newObj[key]=obj[key];}}newObj.default=obj;return newObj;}}
-var Alert=exports.Alert=AlertAPI;
+
+Alert;}});Object.defineProperty(exports,'AsyncStorage',{enumerable:true,get:function get(){return _apis.
+AsyncStorage;}});Object.defineProperty(exports,'Clipboard',{enumerable:true,get:function get(){return _apis.
+Clipboard;}});Object.defineProperty(exports,'Linking',{enumerable:true,get:function get(){return _apis.
+Linking;}});Object.defineProperty(exports,'NetInfo',{enumerable:true,get:function get(){return _apis.
+NetInfo;}});Object.defineProperty(exports,'Share',{enumerable:true,get:function get(){return _apis.
+Share;}});

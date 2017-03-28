@@ -3,7 +3,12 @@ import webpack from 'webpack'
 
 export default {
   entry: {
-    app: path.join(__dirname, 'src/index.js'),
+    app: path.join(__dirname, 'index.web.js'),
+  },
+  target: 'electron',
+  node: {
+    __filename: true,
+    __dirname: true,
   },
   module: {
     rules: [
@@ -20,23 +25,16 @@ export default {
   },
   resolve: {
     alias: {
-      'react-native': 'react-native-web',
+      'react-native': 'react-native-electron',
     },
   },
   output: {
-    path: path.resolve(__dirname, 'dist'),
+    path: path.resolve(__dirname, 'electron'),
     filename: '[name].js',
   },
-  plugins: [
-    new webpack.DefinePlugin({
-      'process.env': {
-        'NODE_ENV': '"development"',
-      },
-    }),
-  ],
   devServer: {
-    contentBase: path.resolve(__dirname, 'dist'),
-    port: 3001,
+    contentBase: path.resolve(__dirname, 'electron'),
+    port: 3000,
     stats: {
       cached: false,
     },

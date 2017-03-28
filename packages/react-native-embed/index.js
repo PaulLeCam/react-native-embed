@@ -1,37 +1,38 @@
 // @flow
 
 import React, { Component } from 'react'
-import { Alert, WebView } from 'react-native'
+import { WebView } from 'react-native'
 import uuid from 'uuid/v4'
 import warning from 'warning'
 
-const eventHandlers = {
-  'Alert.alert': (data = {}) => {
-    Alert.alert(data.title, data.message, data.buttons, data.type)
-  },
+import { eventHandlers, requestHandlers } from './handlers'
+
+const wrappedHandlers = new Map()
+
+export const addEventListener = (type: string, handler: Function) => {
+  if (type === 'url' && typeof handler === 'function') {
+    const wrapHandler = (event: Object, url: string) => {
+      handler({type, url})
+    }
+    wrappedHandlers.set(handler, wrapHandler)
+    remote.app.on('open-url', wrapHandler)
+  }
 }
 
-const requestHandlers = {
-  'Alert.alert': (data = {}) => {
-    if (data.buttons) {
-      return new Promise((resolve) => {
-        const buttons = data.buttons.map((button, i) => ({
-          text: button.text,
-          onPress: () => {
-            resolve(i)
-          },
-        }))
-        Alert.alert(data.title, data.message, buttons, data.type)
-      })
-    } else {
-      Alert.alert(data.title, data.message, null, data.type)
+export const removeEventListener = (type: string, handler: Function) => {
+  if (type === 'url' && typeof handler === 'function') {
+    const wrapHandler = wrappedHandlers.get(handler)
+    if (wrapHandler) {
+      remote.app.removeListener('open-url', wrapHandler)
     }
-  },
+    wrappedHandlers.delete(handler)
+  }
 }
 
 export default class Embed extends Component {
-  requests = Object.create(null)
+  requests: Map<string, Promise<*>> = new Map()
   webview: React.Element<*>
+  wrappedHandlers: Map = new Map()
 
   bindWebView = (e: React.Element<*>) => {
     this.webview = e
@@ -43,8 +44,16 @@ export default class Embed extends Component {
       const msg = JSON.parse(data)
       if (msg.type) {
         switch (msg.type) {
+          // TODO: add addListener/removeListener handlers
+          // Should keep reference of the message ID and use postEvent with the ID
           case 'event':
             this.onEvent(msg)
+            break
+          case 'listener.add':
+            this.onAddListener(msg)
+            break
+          case 'listener.remove':
+            this.onRemoveListener(msg)
             break
           case 'request':
             this.onRequest(msg)
@@ -55,12 +64,18 @@ export default class Embed extends Component {
           default:
             warning(false, 'Unknown message type: ' + msg.type)
         }
-      } else {
-        warning(false, 'Invalid message: no type provided', msg)
       }
     } catch (ex) {
-      warning(false, 'Invalid message: could not parse JSON', data)
+      // Invalid JSON, likely not sent by the embedded bridge
     }
+  }
+
+  onAddListener = ({name, id}: {name: string}) => {
+
+  }
+
+  onRemoveListener = ({id}: {id: string}) => {
+
   }
 
   onEvent = ({name, data}: {name: string, data: mixed}) => {
@@ -102,7 +117,7 @@ export default class Embed extends Component {
     }
   }
 
-  onResponse = ({data, id, ok}: {data: mixed, id: string, ok: bool}) => {
+  onResponse = ({data, id, ok}: {data: mixed, id: string, ok: boolean}) => {
     const req = this.requests[id]
     if (req) {
       if (ok) req.resolve(data)
@@ -116,6 +131,14 @@ export default class Embed extends Component {
     this.webview.postMessage(JSON.stringify({name, data, type: 'event'}))
   }
 
+  postListenerEvent = () => {
+
+  }
+
+  postListenerRemoved = () => {
+
+  }
+
   postRequest = ({name, data}: {name: string, data: mixed}) => {
     const id = uuid()
     const promise = new Promise((resolve, reject) => {
@@ -125,7 +148,7 @@ export default class Embed extends Component {
     return promise
   }
 
-  postResponse = ({data, id, ok}: {data: mixed, id: string, ok: bool}) => {
+  postResponse = ({data, id, ok}: {data: mixed, id: string, ok: boolean}) => {
     this.webview.postMessage(JSON.stringify({data, id, ok, type: 'response'}))
   }
 
