@@ -6,19 +6,19 @@
     "start": "webpack-dev-server"
   },
   "dependencies": {
-    "react": "^15.4.2",
-    "react-dom": "^15.4.2",
-    "react-native-elements": "^0.10.2",
+    "react": "^15.5.4",
+    "react-dom": "^15.5.4",
+    "react-native-elements": "^0.11.2",
     "react-native-embedded": "../../packages/react-native-embedded",
-    "react-native-vector-icons": "^4.0.0",
-    "react-native-web": "^0.0.80"
+    "react-native-vector-icons": "^4.0.1",
+    "react-native-web": "^0.0.94"
   },
   "devDependencies": {
-    "babel-cli": "^6.24.0",
-    "babel-loader": "^6.4.1",
+    "babel-cli": "^6.24.1",
+    "babel-loader": "^7.0.0",
     "babel-preset-react-native": "1.9.1",
-    "file-loader": "^0.10.1",
-    "webpack": "^2.3.2",
-    "webpack-dev-server": "^2.4.2"
+    "file-loader": "^0.11.1",
+    "webpack": "^2.4.1",
+    "webpack-dev-server": "^2.4.5"
   }
 }
